@@ -108,10 +108,11 @@ idevice_error_t idevice_event_unsubscribe(void);
  * @param devices List of udids of devices that are currently available.
  *   This list is terminated by a NULL pointer.
  * @param count Number of devices found.
+ * @param Whether only to return devices that has a usb connection to the host.
  *
  * @return IDEVICE_E_SUCCESS on success or an error value when an error occured.
  */
-idevice_error_t idevice_get_device_list(char ***devices, int *count);
+idevice_error_t idevice_get_device_list(char ***devices, int *count, int usb_connections_only);
 
 /**
  * Free a list of device udids.

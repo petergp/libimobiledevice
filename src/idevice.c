@@ -199,14 +199,14 @@ LIBIMOBILEDEVICE_API idevice_error_t idevice_event_unsubscribe(void)
 	return IDEVICE_E_SUCCESS;
 }
 
-LIBIMOBILEDEVICE_API idevice_error_t idevice_get_device_list(char ***devices, int *count)
+LIBIMOBILEDEVICE_API idevice_error_t idevice_get_device_list(char ***devices, int *count, int usb_connections_only)
 {
 	usbmuxd_device_info_t *dev_list;
 
 	*devices = NULL;
 	*count = 0;
 
-	if (usbmuxd_get_device_list(&dev_list) < 0) {
+	if (usbmuxd_get_device_list(&dev_list, usb_connections_only) < 0) {
 		debug_info("ERROR: usbmuxd is not running!", __func__);
 		return IDEVICE_E_NO_DEVICE;
 	}

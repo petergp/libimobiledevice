@@ -43,7 +43,7 @@ cdef extern from "libimobiledevice/libimobiledevice.h":
     ctypedef void (*idevice_event_cb_t) (const_idevice_event_t event, void *user_data)
     cdef extern idevice_error_t idevice_event_subscribe(idevice_event_cb_t callback, void *user_data)
     cdef extern idevice_error_t idevice_event_unsubscribe()
-    idevice_error_t idevice_get_device_list(char ***devices, int *count)
+    idevice_error_t idevice_get_device_list(char ***devices, int *count, int usb_connections_only)
     idevice_error_t idevice_device_list_free(char **devices)
     void idevice_set_debug_level(int level)
     idevice_error_t idevice_new(idevice_t *device, char *udid)
@@ -108,7 +108,7 @@ def get_device_list():
         int count
         list result
         bytes device
-        iDeviceError err = iDeviceError(idevice_get_device_list(&devices, &count))
+        iDeviceError err = iDeviceError(idevice_get_device_list(&devices, &count, 0))
 
     if err:
         if devices != NULL:

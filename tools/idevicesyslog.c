@@ -173,7 +173,7 @@ int main(int argc, char *argv[])
 
 	int num = 0;
 	char **devices = NULL;
-	idevice_get_device_list(&devices, &num);
+	idevice_get_device_list(&devices, &num, 0);
 	idevice_device_list_free(devices);
 	if (num == 0) {
 		if (!udid) {

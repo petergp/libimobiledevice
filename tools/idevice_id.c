@@ -44,6 +44,7 @@ static void print_usage(int argc, char **argv)
 	printf("  for which the name should be retrieved.\n\n");
 	printf("  -l, --list\t\tlist UDID of all attached devices\n");
 	printf("  -d, --debug\t\tenable communication debugging\n");
+	printf("  -u, --usb\t\tonly usb attached devices \n");
 	printf("  -h, --help\t\tprints usage information\n");
 	printf("\n");
 	printf("Homepage: <" PACKAGE_URL ">\n");
@@ -58,6 +59,7 @@ int main(int argc, char **argv)
 	int ret = 0;
 	int i;
 	int mode = MODE_SHOW_ID;
+	int usb_connections_only = 0;
 	const char* udid = NULL;
 
 	/* parse cmdline args */
@@ -68,6 +70,10 @@ int main(int argc, char **argv)
 		}
 		else if (!strcmp(argv[i], "-l") || !strcmp(argv[i], "--list")) {
 			mode = MODE_LIST_DEVICES;
+			continue;
+		}
+		else if (!strcmp(argv[i], "-u") || !strcmp(argv[i], "--usb")) {
+			usb_connections_only = 1;
 			continue;
 		}
 		else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
@@ -119,7 +125,7 @@ int main(int argc, char **argv)
 		return ret;
 	case MODE_LIST_DEVICES:
 	default:
-		if (idevice_get_device_list(&dev_list, &i) < 0) {
+		if (idevice_get_device_list(&dev_list, &i, usb_connections_only) < 0) {
 			fprintf(stderr, "ERROR: Unable to retrieve device list!\n");
 			return -1;
 		}
